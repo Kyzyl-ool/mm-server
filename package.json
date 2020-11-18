@@ -25,8 +25,8 @@
     "@types/koa": "2.0.49",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-helmet": "^3.1.2",
-    "@types/koa__router": "^8.0.2",
     "@types/koa__cors": "^3.0.1",
+    "@types/koa__router": "^8.0.2",
     "@types/node": "^12.12.6",
     "@types/shelljs": "^0.8.7",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
@@ -35,10 +35,11 @@
     "nodemon": "^2.0.2",
     "shelljs": "^0.8.3",
     "ts-node": "^8.8.2",
-    "typescript": "^3.8.3"
+    "typescript": "^4.0.5"
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",
+    "@koa/router": "^8.0.8",
     "class-validator": "^0.11.1",
     "cron": "^1.8.2",
     "dotenv": "^8.2.0",
@@ -46,7 +47,6 @@
     "koa-bodyparser": "^4.3.0",
     "koa-helmet": "^5.2.0",
     "koa-jwt": "^3.6.0",
-    "@koa/router": "^8.0.8",
     "koa-swagger-decorator": "^1.5.16",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",

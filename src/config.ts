@@ -18,8 +18,8 @@ const config: Config = {
     port: +(process.env.PORT || 3000),
     debugLogging: isDevMode,
     dbsslconn: !isDevMode,
-    jwtSecret: process.env.JWT_SECRET || "your-secret-whatever",
-    databaseUrl: process.env.DATABASE_URL || "postgres://user:pass@localhost:5432/apidb",
+    jwtSecret: process.env.JWT_SECRET,
+    databaseUrl: process.env.DATABASE_URL,
     dbEntitiesPath: [
       ... isDevMode ? ["src/entity/**/*.ts"] : ["dist/entity/**/*.js"],
     ],
