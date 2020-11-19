@@ -13,7 +13,7 @@ protectedRouter.delete("/testusers", user.deleteTestUsers);
 
 // Swagger endpoint
 protectedRouter.swagger({
-    title: "node-typescript-koa-rest",
+    title: "mm-server",
     description: "API REST using NodeJS and KOA framework, typescript. TypeORM for SQL with class-validators. Middlewares JWT, CORS, Winston Logger.",
     version: "1.5.0"
 });

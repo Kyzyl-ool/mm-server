@@ -1,5 +1,17 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
-import {Length, IsEmail} from "class-validator";
+import {Entity, Column, PrimaryGeneratedColumn, AfterLoad} from 'typeorm';
+import {Length, IsEmail} from 'class-validator';
+
+const config = {
+	user: {
+		name: {
+			maxLength: 80,
+			minLength: 10,
+		},
+		email: {
+			maxLength: 100,
+		}
+	},
+};
 
 @Entity()
 export class User {
@@ -7,24 +19,49 @@ export class User {
 	id: number;
 
 	@Column({
-		length: 80
+		length: config.user.name.maxLength
 	})
-	@Length(10, 80)
-	name: string;
+	@Length(config.user.name.minLength, config.user.name.maxLength)
+	firstName: string;
 
 	@Column({
-		length: 100
+		length: config.user.name.maxLength
 	})
-	@Length(10, 100)
+	@Length(config.user.name.minLength, config.user.name.maxLength)
+	lastName: string;
+
+	@Column({
+		length: config.user.name.maxLength
+	})
+	@Length(config.user.name.minLength, config.user.name.maxLength)
+	middleName: string;
+
+	@Column({
+		length: config.user.email.maxLength
+	})
 	@IsEmail()
 	email: string;
 
 	@Column()
 	passwordHash: string;
+
+	@Column({type: 'timestamp with time zone'})
+	lastSeen: string;
+
+	@Column({type: 'timestamp with time zone'})
+	registeredAt: string;
+
+	@Column({type: 'boolean'})
+	isBlocked: boolean;
+
+	@AfterLoad()
+	name() {
+		return `${this.lastName} ${this.lastName} ${this.middleName}`;
+	}
 }
 
 export const userSchema = {
-	id: {type: "number", required: true, example: 1},
-	name: {type: "string", required: true, example: "Javier"},
-	email: {type: "string", required: true, example: "avileslopez.javier@gmail.com"}
+	id: {type: 'number', required: true, example: 1},
+	name: {type: 'string', required: true, example: 'Javier'},
+	email: {type: 'string', required: true, example: 'avileslopez.javier@gmail.com'}
 };

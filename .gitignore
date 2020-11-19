@@ -19,3 +19,5 @@ dist/**/*
 # Logging files
 *.log
 *.pyc
+
+http-requests
