@@ -45,14 +45,14 @@ export class User {
 	@Column()
 	passwordHash: string;
 
-	@Column({type: 'timestamp with time zone'})
-	lastSeen: string;
+	@Column({type: 'timestamp with time zone', default: new Date().toISOString()})
+	lastSeen?: string;
 
-	@Column({type: 'timestamp with time zone'})
-	registeredAt: string;
+	@Column({type: 'timestamp with time zone', default: new Date().toISOString()})
+	registeredAt?: string;
 
-	@Column({type: 'boolean'})
-	isBlocked: boolean;
+	@Column({type: 'boolean', default: false})
+	isBlocked?: boolean;
 
 	@AfterLoad()
 	name() {
