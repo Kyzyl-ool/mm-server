@@ -5,5 +5,6 @@ const unprotectedRouter = new Router();
 
 unprotectedRouter.get('/', general.helloWorld);
 unprotectedRouter.post('/auth', auth.auth);
+unprotectedRouter.put('/register', auth.register);
 
 export { unprotectedRouter };
