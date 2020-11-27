@@ -21,3 +21,4 @@ dist/**/*
 *.pyc
 
 http-requests
+centrifugo/config.json
