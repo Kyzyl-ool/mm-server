@@ -54,6 +54,9 @@ export class User {
 	@Column({type: 'boolean', default: false})
 	isBlocked?: boolean;
 
+	@Column({nullable: true})
+	centrifugoToken?: string;
+
 	@AfterLoad()
 	name() {
 		return `${this.lastName} ${this.lastName} ${this.middleName}`;

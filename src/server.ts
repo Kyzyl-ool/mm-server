@@ -1,23 +1,23 @@
-import Koa from "koa";
-import jwt from "koa-jwt";
-import bodyParser from "koa-bodyparser";
-import helmet from "koa-helmet";
-import cors from "@koa/cors";
-import winston from "winston";
-import { createConnection } from "typeorm";
-import "reflect-metadata";
+import Koa from 'koa';
+import jwt from 'koa-jwt';
+import bodyParser from 'koa-bodyparser';
+import helmet from 'koa-helmet';
+import cors from '@koa/cors';
+import winston from 'winston';
+import { createConnection } from 'typeorm';
+import 'reflect-metadata';
 
-import { logger } from "./logger";
-import { config } from "./config";
-import { unprotectedRouter } from "./unprotectedRoutes";
-import { protectedRouter } from "./protectedRoutes";
-import { cron } from "./cron";
+import { logger } from './logger';
+import { config } from './config';
+import { unprotectedRouter } from './unprotectedRoutes';
+import { protectedRouter } from './protectedRoutes';
+import { cron } from './cron';
 
 // create connection with database
 // note that its not active database connection
 // TypeORM creates you connection pull to uses connections from pull on your requests
 createConnection({
-    type: "postgres",
+    type: 'postgres',
     url: config.databaseUrl,
     synchronize: true,
     logging: false,
@@ -33,7 +33,9 @@ createConnection({
     app.use(helmet());
 
     // Enable cors with default options
-    app.use(cors());
+    app.use(cors({
+			credentials: true,
+		}));
 
     // Logger middleware -> use winston as logger (logging.ts with config)
     app.use(logger(winston));
@@ -54,8 +56,8 @@ createConnection({
     // Register cron job to do any action needed
     cron.start();
 
-    app.listen(config.port);
+    app.listen(config.port, '0.0.0.0');
 
     console.log(`Server running on port ${config.port}`);
 
-}).catch((error: string) => console.log("TypeORM connection error: ", error));
+}).catch((error: string) => console.log('TypeORM connection error: ', error));

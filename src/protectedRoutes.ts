@@ -1,7 +1,9 @@
 import { SwaggerRouter } from 'koa-swagger-decorator';
 import { user } from './controller';
 
-const protectedRouter = new SwaggerRouter();
+const protectedRouter = new SwaggerRouter({
+	prefix: '/api'
+});
 
 // USER ROUTES
 protectedRouter.get('/users', user.getUsers);
