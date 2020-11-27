@@ -38,9 +38,9 @@ export async function auth(ctx: BaseContext) {
 			lastSeen: new Date().toISOString()
 		});
 
-		ctx.body = 200;
+		ctx.status = 200;
 		return;
 	}
 
-	ctx.body = 401;
+	ctx.status = 401;
 }
