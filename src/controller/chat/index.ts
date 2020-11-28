@@ -7,8 +7,8 @@ export default class ChatController {
 	@request('get', '/chat')
 	@summary('Get rooms info')
 	public static async getChats(ctx: BaseContext): Promise<void> {
-		await getChats(ctx);
 		ctx.status = 200;
+		ctx.body = await getChats(ctx);
 	}
 
 	@request('put', '/chat')
