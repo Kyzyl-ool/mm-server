@@ -32,4 +32,7 @@ export class Message {
 
 	@Column({type: 'timestamp with time zone'})
 	deletedAt: string;
+
+	@Column({type:'boolean', default: false})
+	isReadByAll: boolean;
 }

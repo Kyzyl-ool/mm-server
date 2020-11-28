@@ -4,6 +4,7 @@ import {BaseContext} from 'koa';
 import jwt from 'jsonwebtoken';
 import * as centrifugeConfig from '../../../../centrifugo/config.json';
 import {getNewToken} from '../../../utils/token';
+import {config} from '../../../config';
 
 
 interface AuthRequestBody {
@@ -71,6 +72,7 @@ export async function auth(ctx: BaseContext) {
 			middleName: user.middleName,
 			email: user.email,
 			isBlocked: user.isBlocked,
+			token: jwt.sign({sub: user.id}, config.jwtSecret, {expiresIn: '1h'}),
 		};
 		return;
 	}
@@ -90,11 +92,13 @@ export function checkAuth(ctx: BaseContext) {
 		jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
 			if (err) {
 				ctx.status = 401;
-				return;
+				throw err;
 			}
 			console.log('decoded', decoded);
 		});
 	}
 
 	ctx.status = 401;
+
+	throw ctx;
 }

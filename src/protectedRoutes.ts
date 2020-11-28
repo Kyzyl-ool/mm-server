@@ -1,8 +1,8 @@
 import { SwaggerRouter } from 'koa-swagger-decorator';
-import { user } from './controller';
+import { user, chat } from './controller';
 
 const protectedRouter = new SwaggerRouter({
-	prefix: '/api'
+	prefix: '/api',
 });
 
 // USER ROUTES
@@ -12,6 +12,8 @@ protectedRouter.post('/users', user.createUser);
 protectedRouter.put('/users/:id', user.updateUser);
 protectedRouter.delete('/users/:id', user.deleteUser);
 protectedRouter.delete('/testusers', user.deleteTestUsers);
+
+protectedRouter.get('/chat', chat.getChats);
 
 // Swagger endpoint
 protectedRouter.swagger({

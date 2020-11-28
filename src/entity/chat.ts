@@ -16,10 +16,10 @@ export class Chat {
 	@OneToMany(() => Message, message => message.id)
 	messages: Message[];
 
-	@Column({type: 'timestamp with time zone'})
+	@Column({type: 'timestamp with time zone', default: new Date().toISOString()})
 	createdAt: string;
 
-	@Column({type: 'timestamp with time zone'})
+	@Column({type: 'timestamp with time zone', nullable: true})
 	deletedAt: string;
 }
 

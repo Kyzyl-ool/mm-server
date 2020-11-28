@@ -13,9 +13,9 @@ export class Participant {
 	@ManyToOne(() => User, user => user.id)
 	user: User;
 
-	@Column({type: 'timestamp with time zone'})
+	@Column({type: 'timestamp with time zone', default: new Date().toISOString()})
 	createdAt: string;
 
-	@Column({type: 'timestamp with time zone'})
+	@Column({type: 'timestamp with time zone', nullable: true})
 	deletedAt: string;
 }
