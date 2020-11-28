@@ -17,16 +17,9 @@ export default class MessageController {
 		const chatId = ctx.params.chatId;
 
 		if (chatId) {
-			try {
-				ctx.body = await getMessages(chatId);
-				ctx.status = 200;
-				return;
-			} catch (e) {
-				console.error(e);
-				ctx.status = 400;
-				ctx.body = 'Invalid parameters';
-				return;
-			}
+			ctx.body = await getMessages(chatId);
+			ctx.status = 200;
+			return;
 		}
 
 		ctx.status = 400;

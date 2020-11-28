@@ -54,7 +54,9 @@ export async function getMessages(chatId: number): Promise<IMessage[]> {
 	const chatRepository: Repository<Chat> = getManager().getRepository(Chat);
 	const participantRepository: Repository<Participant> = getManager().getRepository(Participant);
 
-	const chat = await chatRepository.findOne(chatId);
+	const chat = await chatRepository.findOne(chatId, {
+		relations: ['messages', 'messages.sender'],
+	});
 
 	if (!chat) {
 		throw {
@@ -72,7 +74,8 @@ export async function getMessages(chatId: number): Promise<IMessage[]> {
 	const participants = await participantRepository.find({
 		where: {
 			chat
-		}
+		},
+		relations: ['user']
 	});
 
 	return messages.map(message => messageToFormattedMessage(message, participants));

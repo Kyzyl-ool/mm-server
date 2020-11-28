@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToMany, JoinTable} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne} from 'typeorm';
 import {Message} from './message';
 import {User} from './user';
 
@@ -13,7 +13,7 @@ export class Chat {
 	@OneToOne(() => User, user => user.id)
 	creator: User;
 
-	@OneToMany(() => Message, message => message.id)
+	@OneToMany(() => Message, message => message.chat)
 	messages: Message[];
 
 	@Column({type: 'timestamp with time zone', default: new Date().toISOString()})
