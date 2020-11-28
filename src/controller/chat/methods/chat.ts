@@ -42,10 +42,10 @@ export async function getChats(ctx: BaseContext): Promise<IChat[]> {
 	const participantRepository: Repository<Participant> = getManager().getRepository(Participant);
 	const messageRepository: Repository<Message> = getManager().getRepository(Message);
 
-	const userId = ctx.state.user.sub;
+	const userId = `${ctx.state.user.sub}`;
 
 	const user = await userRepository.findOne({
-		id: userId
+		id: +userId
 	});
 
 	const participantEntries = await participantRepository.find({

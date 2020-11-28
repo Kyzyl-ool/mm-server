@@ -50,12 +50,25 @@ function messageToFormattedMessage(message: Message, participants: Participant[]
 	};
 }
 
-export async function getMessages(chatId: string): Promise<IMessage[]> {
+export async function getMessages(chatId: number): Promise<IMessage[]> {
 	const chatRepository: Repository<Chat> = getManager().getRepository(Chat);
 	const participantRepository: Repository<Participant> = getManager().getRepository(Participant);
 
 	const chat = await chatRepository.findOne(chatId);
+
+	if (!chat) {
+		throw {
+			response: {
+				status: 400,
+				body: 'Invalid chat',
+			}
+		};
+	}
+
 	const {messages} = chat;
+	if (!messages) {
+		return [];
+	}
 	const participants = await participantRepository.find({
 		where: {
 			chat
@@ -83,5 +96,12 @@ export async function addMessage(senderId: string, chatId: string, text: string)
 	const chat = await chatRepository.findOne(chatId);
 	const user = await userRepository.findOne(senderId);
 
-	await _addMessage(user, chat, text);
+	if (chat && user) {
+		await _addMessage(user, chat, text);
+	} else {
+		throw {
+			status: 400,
+			body: 'Invalid user or chat'
+		};
+	}
 }

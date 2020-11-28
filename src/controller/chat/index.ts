@@ -14,7 +14,7 @@ export default class ChatController {
 	@request('put', '/chat')
 	@summary('Create new chat')
 	public static async createChat(ctx: BaseContext): Promise<void> {
-		const userId = ctx.state.user.id;
+		const userId = `${ctx.state.user.sub}`;
 		const {title} = ctx.request.body;
 		const chatId = await createChat(userId, title);
 		await joinChat(userId, chatId);
@@ -24,7 +24,7 @@ export default class ChatController {
 	@request('post', '/chat/join')
 	@summary('Join chat')
 	public static async joinChat(ctx: BaseContext): Promise<void> {
-		const userId = ctx.state.user.id;
+		const userId = `${ctx.state.user.sub}`;
 		const {chatId} = ctx.request.body;
 		await joinChat(userId, chatId);
 		ctx.status = 200;
