@@ -1,9 +1,9 @@
 import {request, responsesAll, summary} from 'koa-swagger-decorator';
 import {BaseContext} from 'koa';
-import {createChat, getChats, joinChat} from '../auth/methods/chat';
+import {createChat, getChats, joinChat} from './methods/chat';
 
 @responsesAll({ 200: { description: 'success'}, 400: { description: 'bad request'}, 401: { description: 'unauthorized, missing/wrong jwt token'}})
-export default class AuthController {
+export default class ChatController {
 	@request('get', '/chat')
 	@summary('Get rooms info')
 	public static async getChats(ctx: BaseContext): Promise<void> {

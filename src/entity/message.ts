@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, ManyToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
 import {User} from './user';
 import {Chat} from './chat';
 
@@ -24,13 +24,13 @@ export class Message {
 	@ManyToOne(() => Chat, chat => chat.id)
 	chat: Chat;
 
-	@Column({type: 'enum', enum: MessageType})
+	@Column({type: 'enum', enum: MessageType, default: 'MESSAGE_TEXT'})
 	type: MessageType;
 
-	@Column({type: 'timestamp with time zone'})
+	@Column({type: 'timestamp with time zone', default: new Date().toISOString()})
 	createdAt: string;
 
-	@Column({type: 'timestamp with time zone'})
+	@Column({type: 'timestamp with time zone', nullable: true})
 	deletedAt: string;
 
 	@Column({type:'boolean', default: false})
