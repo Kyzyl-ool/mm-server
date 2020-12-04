@@ -93,10 +93,21 @@ export async function getChats(ctx: BaseContext): Promise<IChat[]> {
 
 async function _joinChat(user: User, chat: Chat): Promise<Participant> {
 	const participantRepository: Repository<Participant> = getManager().getRepository(Participant);
-	return await participantRepository.save({
-		chat,
-		user,
+	const result = await participantRepository.findOne({
+		where: {
+			chat,
+			user
+		}
 	});
+
+	if (!result) {
+		return await participantRepository.save({
+			chat,
+			user,
+		});
+	} else {
+		return result;
+	}
 }
 
 export async function joinChat(userId: string, chatId: string): Promise<void> {
