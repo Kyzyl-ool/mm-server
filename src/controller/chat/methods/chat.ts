@@ -13,14 +13,16 @@ interface IUser {
 	url: string;
 }
 
+interface LastMessage {
+	isReadByAll: number;
+	timestamp: number;
+	text: string;
+	id: number;
+}
+
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 interface IChat {
-	lastMessage: {
-		isReadByAll: number;
-		timestamp: number;
-		text: string;
-		id: number;
-	};
+	lastMessage: LastMessage | null;
 	timestamp: number;
 	users: IUser[];
 	id: number;
@@ -30,8 +32,9 @@ async function chatParticipants(chat: Chat): Promise<User[]> {
 	const participantRepository: Repository<Participant> = getManager().getRepository(Participant);
 	const result = await participantRepository.find({
 		where: {
-			chat,
-		}
+			chat
+		},
+		relations: ['user']
 	});
 
 	return result.map(participant => participant.user);
@@ -51,7 +54,8 @@ export async function getChats(ctx: BaseContext): Promise<IChat[]> {
 	const participantEntries = await participantRepository.find({
 		where: {
 			user
-		}
+		},
+		relations: ['chat']
 	});
 
 
@@ -70,12 +74,12 @@ export async function getChats(ctx: BaseContext): Promise<IChat[]> {
 
 		return ({
 			id: chat.id,
-			lastMessage: {
+			lastMessage: message ? ({
 				id: message.id,
 				isReadByAll: message.isReadByAll ? 1 : 0,
 				text: message.text,
 				timestamp: new Date(message.createdAt).getTime()
-			},
+			}) : null,
 			timestamp: new Date(chat.createdAt).getTime(),
 			users: users.map(user => ({
 				id: user.id,
