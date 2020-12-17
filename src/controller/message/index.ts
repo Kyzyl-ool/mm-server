@@ -1,7 +1,7 @@
 import {path, request, responsesAll, summary} from 'koa-swagger-decorator';
 import {BaseContext} from 'koa';
 import {addMessage, getMessages} from './methods/message';
-// import CentrifugeSingleton from '../centrifuge/centrifuge';
+import CentrifugeSingleton from '../centrifuge/centrifuge';
 
 @responsesAll({
 	200: {description: 'success'},
@@ -41,7 +41,7 @@ export default class MessageController {
 			try {
 				await addMessage(userId, chatId, text);
 
-				// await CentrifugeSingleton.getInstance().publish('news', text);
+				await CentrifugeSingleton.getInstance().publish('news', text);
 
 				ctx.status = 201;
 				return;
