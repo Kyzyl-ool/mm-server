@@ -4,7 +4,7 @@ import bodyParser from 'koa-bodyparser';
 import helmet from 'koa-helmet';
 import cors from '@koa/cors';
 import winston from 'winston';
-import {createConnection, getConnection} from 'typeorm';
+import {createConnection} from 'typeorm';
 import 'reflect-metadata';
 
 import {logger} from './logger';
