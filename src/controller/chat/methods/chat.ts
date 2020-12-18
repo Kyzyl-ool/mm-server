@@ -86,7 +86,8 @@ export async function getChats(ctx: BaseContext): Promise<IChat[]> {
 				name: `${user.lastName} ${user.firstName[0]}. ${user.middleName[0]}.`,
 				photo: '-',
 				url: '-',
-			}))
+			})),
+			channel: chat.channel,
 		});
 	}));
 }

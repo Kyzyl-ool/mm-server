@@ -18,6 +18,9 @@ export default class ChatController {
 		const {title, participants = []} = ctx.request.body;
 		const chatId = await createChat(userId, title, participants);
 		await joinChat(userId, chatId);
+		await Promise.all(participants.map(async (value: string) => {
+			return joinChat(value, chatId);
+		}));
 		ctx.status = 201;
 	}
 
