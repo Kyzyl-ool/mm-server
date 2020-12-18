@@ -1,6 +1,8 @@
 import {request, responsesAll, summary} from 'koa-swagger-decorator';
 import {BaseContext} from 'koa';
 import {createChat, getChats, joinChat} from './methods/chat';
+import MessageController from '../message';
+import {addMessage} from '../message/methods/message';
 
 @responsesAll({ 200: { description: 'success'}, 400: { description: 'bad request'}, 401: { description: 'unauthorized, missing/wrong jwt token'}})
 export default class ChatController {
@@ -21,6 +23,7 @@ export default class ChatController {
 		await Promise.all(participants.map(async (value: string) => {
 			return joinChat(value, chatId);
 		}));
+		await addMessage(userId, chatId, 'Initial message');
 		ctx.status = 201;
 	}
 
