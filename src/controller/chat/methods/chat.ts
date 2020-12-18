@@ -118,22 +118,24 @@ export async function joinChat(userId: string, chatId: string): Promise<void> {
 	await _joinChat(user, chat);
 }
 
-async function _createChat(creator: User, title: string): Promise<InsertResult> {
+async function _createChat(creator: User, title: string, channel: string): Promise<InsertResult> {
 	const chatRepository: Repository<Chat> = getManager().getRepository(Chat);
 	return await chatRepository.insert({
 		creator,
 		title,
+		channel
 	});
 }
 
 /**
  * @param creatorId
  * @param title
+ * @param participants
  * @return - chat ID
  */
-export async function createChat(creatorId: string, title: string): Promise<string> {
+export async function createChat(creatorId: string, title: string, participants: string[]): Promise<string> {
 	const userRepository: Repository<User> = getManager().getRepository(User);
 	const user = await userRepository.findOne(creatorId);
-	const result = await _createChat(user, title);
+	const result = await _createChat(user, title, `messages#${[creatorId, ...participants].join(',')}`);
 	return `${result.identifiers[0].id}`;
 }

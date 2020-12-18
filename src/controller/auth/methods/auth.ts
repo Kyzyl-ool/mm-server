@@ -47,6 +47,11 @@ export async function auth(ctx: BaseContext) {
 		return;
 	}
 
+	if (body.email.length === 0) {
+		ctx.status = 400;
+		return;
+	}
+
 	const userRepository: Repository<User> = getManager().getRepository(User);
 	const user = await userRepository.findOne({
 		where: {

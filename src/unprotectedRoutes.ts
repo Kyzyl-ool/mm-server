@@ -1,5 +1,5 @@
 import Router from '@koa/router';
-import { auth } from './controller';
+import { auth, general } from './controller';
 
 const unprotectedRouter = new Router({
 	prefix: '/api'
@@ -7,5 +7,6 @@ const unprotectedRouter = new Router({
 
 unprotectedRouter.post('/auth', auth.auth);
 unprotectedRouter.put('/register', auth.register);
+unprotectedRouter.get('/online', general.getOnlineUsers);
 
 export { unprotectedRouter };

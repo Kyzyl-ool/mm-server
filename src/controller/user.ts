@@ -173,3 +173,16 @@ export default class UserController {
     }
 
 }
+
+
+const _updateLastSeen = async (user: User): Promise<void> => {
+	const userRepository = getManager().getRepository(User);
+	await userRepository.update(user, {
+		lastSeen: new Date().toISOString()
+	});
+};
+
+export const updateLastSeen = async (sub: string): Promise<void> => {
+	const userRepository = getManager().getRepository(User);
+	await _updateLastSeen(await userRepository.findOneOrFail(sub));
+};

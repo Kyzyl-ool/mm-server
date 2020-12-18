@@ -21,5 +21,8 @@ export class Chat {
 
 	@Column({type: 'timestamp with time zone', nullable: true})
 	deletedAt: string;
+
+	@Column({length: 255})
+	channel: string;
 }
 

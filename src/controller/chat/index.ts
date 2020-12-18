@@ -15,8 +15,8 @@ export default class ChatController {
 	@summary('Create new chat')
 	public static async createChat(ctx: BaseContext): Promise<void> {
 		const userId = `${ctx.state.user.sub}`;
-		const {title} = ctx.request.body;
-		const chatId = await createChat(userId, title);
+		const {title, participants = []} = ctx.request.body;
+		const chatId = await createChat(userId, title, participants);
 		await joinChat(userId, chatId);
 		ctx.status = 201;
 	}
