@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
-dotenv.config({ path: ".env" });
+dotenv.config({ path: '.env' });
 
 export interface Config {
     port: number;
@@ -12,7 +12,7 @@ export interface Config {
     cronJobExpression: string;
 }
 
-const isDevMode = process.env.NODE_ENV == "development";
+const isDevMode = process.env.NODE_ENV == 'development';
 
 const config: Config = {
     port: +(process.env.PORT || 3000),
@@ -21,9 +21,9 @@ const config: Config = {
     jwtSecret: process.env.JWT_SECRET,
     databaseUrl: process.env.DATABASE_URL,
     dbEntitiesPath: [
-      ... isDevMode ? ["src/entity/**/*.ts"] : ["dist/entity/**/*.js"],
+      ... isDevMode ? ['src/entity/**/*.ts'] : ['dist/entity/**/*.js'],
     ],
-    cronJobExpression: "0 * * * *"
+    cronJobExpression: '0 * * * *'
 };
 
 export { config };

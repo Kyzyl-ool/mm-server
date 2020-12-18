@@ -2,17 +2,16 @@
   "name": "mm-server",
   "version": "0.0.1",
   "description": "This is the MyMessenger server",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "scripts": {
     "watch-server": "nodemon --watch src -e ts,tsx --exec ts-node src/server.ts",
     "build-ts": "tsc",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "serve": "node dist/server.js",
+    "serve": "node dist/src/server.js",
     "build": "npm run lint && npm run build-ts && npm run copy-static-assets",
     "start": "npm run serve",
-    "run:centrifugo": "docker run --name centrifugo --link some-redis:redis --ulimit nofile=65536:65536 -v ~/WebstormProjects/mm-server/centrifugo:/centrifugo -p 8000:8000 centrifugo/centrifugo centrifugo -c config.json --engine=redis --redis_host=redis --redis_port=6379 --admin",
-    "run:redis": "docker run --name some-redis -h redis -p 127.0.0.1:6379:6379 -d redis redis-server --appendonly yes"
+    "run:centrifugo": "docker run --name centrifugo --ulimit nofile=65536:65536 -v ~/WebstormProjects/mm-server/centrifugo:/centrifugo -p 8000:8000 centrifugo/centrifugo centrifugo -c config.json"
   },
   "engines": {
     "node": "12.x.x",
@@ -20,7 +19,7 @@
   },
   "author": "Kezhik Kyzyl-ool",
   "license": "MIT",
-  "homepage": "https://github.com/Kyzyl-ool/mm-server",
+  "homepage": "https://mini-messenger.kyzyl-ool.org",
   "repository": "git@github.com:Kyzyl-ool/mm-server.git",
   "devDependencies": {
     "@types/cron": "^1.7.2",
