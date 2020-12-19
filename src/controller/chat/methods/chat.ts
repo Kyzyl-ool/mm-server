@@ -5,6 +5,8 @@ import {Participant} from '../../../entity/participants';
 import {Chat} from '../../../entity/chat';
 import {Message} from '../../../entity/message';
 
+const avatarURL = 'https://api-private.atlassian.com/users/557058:ee55b07c-9710-4861-aeaf-d4c19d3326cb/avatar?initials=public';
+
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 interface IUser {
 	id: number;
@@ -63,14 +65,17 @@ export async function getChats(ctx: BaseContext): Promise<IChat[]> {
 		...value.chat
 	}));
 
-	const message = await messageRepository.findOne({
-		order: {
-			createdAt: 'DESC'
-		}
-	});
-
 	return Promise.all(chats.map(async chat => {
 		const users = await chatParticipants(chat);
+
+		const message = await messageRepository.findOne({
+			where: {
+				chat
+			},
+			order: {
+				createdAt: 'DESC'
+			}
+		});
 
 		return ({
 			id: chat.id,
@@ -83,8 +88,9 @@ export async function getChats(ctx: BaseContext): Promise<IChat[]> {
 			timestamp: new Date(chat.createdAt).getTime(),
 			users: users.map(user => ({
 				id: user.id,
-				name: `${user.lastName} ${user.firstName[0]}. ${user.middleName[0]}.`,
-				photo: '-',
+				// todo: should use all names
+				name: `${user.firstName}`,
+				photo: avatarURL,
 				url: '-',
 			})),
 			channel: chat.channel,
