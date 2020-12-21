@@ -1,0 +1,11 @@
+{
+  "v3_use_offset": true,
+  "token_hmac_secret_key": " KEY ",
+  "admin_password": " PASSWORD ",
+  "admin_secret": " SECRET ",
+  "api_key": " KEY ",
+  "publish": true,
+  "presence": true,
+  "history_size": 64,
+  "history_lifetime": 300
+}
